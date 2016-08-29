@@ -1,8 +1,12 @@
 Unofficial Arvados Keep Mount Installation
 ---
 
-This is an unofficial small tutorial on how to get an Arvados Keep
-mount installed under a Unix shell.  Please see the 
+This is an unofficial mini tutorial on how to get an Arvados Keep
+mount installed under a Unix shell.  Please see the [Arvados documentation](http://doc.arvados.org/),
+for more details.  Note that the following steps have worked for me but might not work for everyone
+and are subject to change.  The Arvados documentation should be used as the reference.
+
+---
 
 There are a few key things to setup to get a working Arvados mount going.
 
@@ -37,12 +41,11 @@ Clone the Arvados repository, install the Arvados fuse libraries
 ```bash
 git clone https://github.com/curoverse/arvados
 cd arvados/services/fuse/
-sudo addgroup `whoami` fuse
 sudo python setup.py install
+sudo addgroup `whoami` fuse
 ```
 
-Now `arv-mount` should be available.  This won't work until you've set up your environment
-with the Arvados token and host.  You should test to make sure `arv-mount` can be executed
+Now `arv-mount` should be available. You should test to make sure `arv-mount` can be executed
 within the shell.  For example, this is what running `arv-mount` without any arguments looks
 like:
 
@@ -60,7 +63,9 @@ usage: arv-mount [-h] [--retries RETRIES] [--allow-other]
                  [--unmount-timeout UNMOUNT_TIMEOUT] [--exec ...]
                  mountpoint
 arv-mount: error: too few arguments
-``
+```
+`arv-mount` won't be able to actually mount the remote Arvados Keep store
+until you've set up your environment with the Arvados token and host.
 
 ### Setup Arvados Environment
 
@@ -88,7 +93,8 @@ unset ARVADOS_API_HOST_INSECURE
 
 Note that the `ARVADOS_API_TOKEN` listed above is not a valid token and you should
 fill this value in with the token as it appears in the `Current token` page from
-Arvados workbench.
+Arvados workbench.  If your host differs from `su92l.arvadosapi.com`, the `ARVADOS_API_HOST`
+value should be set appropriately.
 
 ## Create Arvados Keep Mount Point
 
@@ -141,7 +147,8 @@ fusermount -u keep
 
 References
 ---
-
+* [Arvados documentation](http://doc.arvados.org/),
 * [Arvados CLI Installation](http://doc.arvados.org/sdk/cli/install.html)
 * [Arvados Keep Mount Tutorial](http://doc.arvados.org/user/tutorials/tutorial-keep-mount.html)
 * [Arvados Environment](http://doc.arvados.org/user/getting_started/check-environment.html)
+* [Arvados Wiki](https://dev.arvados.org/)
